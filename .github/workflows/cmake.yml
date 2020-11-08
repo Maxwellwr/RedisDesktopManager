@@ -45,6 +45,7 @@ jobs:
       uses: jurplel/install-qt-action@v2
       with:
         version: '5.15.0'
+        modules: qtcharts 
     
     - name: Use MSVC cmd
       uses: ilammy/msvc-dev-cmd@v1
