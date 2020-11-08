@@ -24,16 +24,15 @@ jobs:
       with:
         version: '5.15.0'
 
-    - name: Setup Python
-      uses: actions/setup-python@v2.1.4
-
     - name: apply patch
-      run: git apply ../hiredis-win.patch
-      working-directory: ./3rdparty/qredisclient/3rdparty/hiredis
+      run: |
+        cd 3rdparty/qredisclient/3rdparty/hiredis
+        git apply ../hiredis-win.patch
       
     - name: install zLib
-      run: nuget install zlib-msvc14-x64 -Version 1.2.11.7795
-      working-directory: ./3rdparty
+      run: |
+        cd 3rdparty
+        nuget install zlib-msvc14-x64 -Version 1.2.11.7795
 
     - name: install python requirements
       run: pip3 install -r ./src/py/requirements.txt
