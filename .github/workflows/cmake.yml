@@ -26,7 +26,10 @@ jobs:
 
     - name: apply patch
       run: |
-        cd 3rdparty/qredisclient/3rdparty/hiredis
+        cd 3rdparty
+        cd qredisclient
+        cd 3rdparty
+        cd hiredis
         git apply ../hiredis-win.patch
       
     - name: install zLib
