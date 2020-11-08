@@ -23,7 +23,5 @@ jobs:
       with:
         version: '5.15.0'
         
-    - name: git Actions
-      uses: srt32/git-actions@v0.0.3
-      with:
-        args: 'git status' 
+    - name: git status
+      run: git status
