@@ -29,18 +29,17 @@ jobs:
 
     - name: apply patch
       run: git apply ../hiredis-win.patch
-      working-directory: ${{github.workspace}}/3rdparty/qredisclient/3rdparty/hiredis
+      working-directory: ./3rdparty/qredisclient/3rdparty/hiredis
       
     - name: install zLib
       run: nuget install zlib-msvc14-x64 -Version 1.2.11.7795
-      working-directory: ${{github.workspace}}/3rdparty
+      working-directory: ./3rdparty
 
     - name: install python requirements
-      run: pip3 install -r ${{github.workspace}}/src/py/requirements.txt
+      run: pip3 install -r ./src/py/requirements.txt
     
     - name: Build
       run: |
         "C:/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/VC/Auxiliary/Build/vcvars64.bat" && set
         qmake src/rdm.pro
         nmake
-      working-directory: ${{github.workspace}}
