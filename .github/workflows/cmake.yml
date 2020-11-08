@@ -13,15 +13,34 @@ jobs:
     # well on Windows or Mac.  You can convert this to a matrix build if you need
     # cross-platform coverage.
     # See: https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
+    name: 'Windows Latest x64'
     runs-on: windows-latest
 
     steps:
     - uses: actions/checkout@v2
-
+          
     - name: Install Qt
       uses: jurplel/install-qt-action@v2
       with:
         version: '5.15.0'
-        
-    - name: git status
-      run: git status
+
+    - name: Setup Python
+      uses: actions/setup-python@v2.1.4
+
+    - name: apply patch
+      run: git apply ../hiredis-win.patch
+      working-directory: ${{github.workspace}}/3rdparty/qredisclient/3rdparty/hiredis
+      
+    - name: install zLib
+      run: nuget install zlib-msvc14-x64 -Version 1.2.11.7795
+      working-directory: ${{github.workspace}}/3rdparty
+
+    - name: install python requirements
+      run: pip3 install -r ${{github.workspace}}/src/py/requirements.txt
+    
+    - name: Build
+      run: |
+        "C:/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/VC/Auxiliary/Build/vcvars64.bat" && set
+        qmake src/rdm.pro
+        nmake
+      working-directory: ${{github.workspace}}
