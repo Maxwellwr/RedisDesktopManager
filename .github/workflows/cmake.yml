@@ -23,6 +23,7 @@ jobs:
       run: |
         cd 3rdparty
         cd qredisclient
+        dir
         cd 3rdparty
         cd hiredis
         git apply ../hiredis-win.patch
