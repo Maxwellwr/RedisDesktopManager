@@ -36,7 +36,6 @@ jobs:
     - name: Path
       run: |
         echo "c:\Qt\Tools\CMake_64\bin" >> $GITHUB_PATH
-        echo "C:\Qt\5.15.1\msvc2019_64\bin" >> $GITHUB_PATH
       
     - name: install zLib
       run: |
@@ -56,5 +55,5 @@ jobs:
            
     - name: Build
       run: |
-        qmake src/rdm.pro
-        nmake
+        C:\Qt\5.15.1\msvc2019_64\bin\qmake.exe src/rdm.pro -spec win32-msvc
+        C:\Qt\Tools\QtCreator\bin\jom.exe -f build-rdm-Desktop_Qt_5_15_1_MSVC2019_64bit-Release/Makefile qmake_all
