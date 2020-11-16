@@ -30,19 +30,18 @@ jobs:
       # uses: seanmiddleditch/gha-setup-vsdevenv@8c6bbf80998779f2bba87b1452832e561b65fd57
       uses: seanmiddleditch/gha-setup-vsdevenv@v3
       
+    - name: Path
+      run: |
+        echo "c:\Qt\Tools\CMake_64\bin" >> $GITHUB_PATH
+      
     - name: install zLib
       run: |
         cd 3rdparty
         nuget install zlib-msvc14-x64 -Version 1.2.11.7795
-        
-    - name: install-cmake
-      uses: Symbitic/install-cmake@v0.1.0
-      
-    - name: Comfigure with cmake LZ4
-      uses: ashutoshvarma/action-cmake-build@v1
-      with:
-        build-dir: ${{ runner.workspace }}/3rdparty/lz4/build/cmake
-        configure-options: -DLZ4_BUNDLED_MODE=ON
+              
+    - name: Configure with cmake LZ4
+      run: cmake -DLZ4_BUNDLED_MODE=ON .
+      working-directory: ${{ runner.workspace }}/3rdparty/lz4/build/cmake
         
     - name: Build LZ4
       run: msbuild LZ4.sln /t:Build /p:Configuration=Release
@@ -50,13 +49,7 @@ jobs:
 
     - name: install python requirements
       run: pip3 install -r ${{ runner.workspace }}/src/py/requirements.txt
-    
-    - name: Install Qt
-      uses: jurplel/install-qt-action@v2
-      with:
-        version: '5.15.0'
-        modules: qtcharts 
-        
+           
     - name: Build
       run: |
         qmake ${{ runner.workspace }}/src/rdm.pro
