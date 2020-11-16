@@ -41,16 +41,16 @@ jobs:
               
     - name: Configure with cmake LZ4
       run: cmake -DLZ4_BUNDLED_MODE=ON .
-      working-directory: ${{ runner.workspace }}/3rdparty/lz4/build/cmake
+      working-directory: 3rdparty/lz4/build/cmake
         
     - name: Build LZ4
       run: msbuild LZ4.sln /t:Build /p:Configuration=Release
-      working-directory: ${{ runner.workspace }}/3rdparty/lz4/build/cmake
+      working-directory: 3rdparty/lz4/build/cmake
 
     - name: install python requirements
-      run: pip3 install -r ${{ runner.workspace }}/src/py/requirements.txt
+      run: pip3 install -r src/py/requirements.txt
            
     - name: Build
       run: |
-        qmake ${{ runner.workspace }}/src/rdm.pro
+        qmake src/rdm.pro
         nmake
