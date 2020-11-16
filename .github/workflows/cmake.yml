@@ -30,10 +30,12 @@ jobs:
       # uses: seanmiddleditch/gha-setup-vsdevenv@8c6bbf80998779f2bba87b1452832e561b65fd57
       uses: seanmiddleditch/gha-setup-vsdevenv@v3
       
+    - name: setup-msbuild
+      uses: microsoft/setup-msbuild@v1
+      
     - name: Path
       run: |
         echo "c:\Qt\Tools\CMake_64\bin" >> $GITHUB_PATH
-        echo "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160" >> $GITHUB_PATH
       
     - name: install zLib
       run: |
