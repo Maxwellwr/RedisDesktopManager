@@ -33,6 +33,7 @@ jobs:
     - name: Path
       run: |
         echo "c:\Qt\Tools\CMake_64\bin" >> $GITHUB_PATH
+        echo "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160" >> $GITHUB_PATH
       
     - name: install zLib
       run: |
