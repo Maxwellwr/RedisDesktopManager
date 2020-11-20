@@ -13,6 +13,7 @@ On the first tab (Connection Settings), put in general information regarding the
 * **Host** - redis-server host (example: localhost)
 * **Port** - redis-server port (example: 6379)
 * **Password** - redis-server authentication password (if any) ([http://redis.io/commands/AUTH](http://redis.io/commands/AUTH))
+* **Username** - only for redis-servers >= 6.0 with configured [ACL](https://redis.io/topics/acl), for older redis-server leave empty
 
 ## Connect to a public redis-server with SSL
 If you want to connect to a redis-server instance with SSL you need to enable SSL on the second tab and provide a public key in PEM format. 
@@ -20,6 +21,20 @@ Instructions for certain cloud services are below:
 
 <img src="http://rdm.dev/static/docs/rdm_ssl.png?v=2" />
 
+### AWS ElastiCache
+AWS ElastiCache is not accessible outside of your VPC. In order to connect to your ElastiCache remotely, you need to use one of the following options:
+
+*  Setup VPN connection **[Recommended]**
+[https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/accessing-elasticache.html#access-from-outside-aws](https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/accessing-elasticache.html#access-from-outside-aws)
+*  Setup SSH proxying host and connect through SSH tunnel. **[Slow network performance. Not recommended]**
+*  Setup NAT instance for exposing your AWS ElastiCache to the Internet **[Firewall rules should be configured very carefully. Not recommended.]**
+
+#### How to connect to AWS ElastiCache with In-Transit Encryption
+##### VPN / NAT
+Enable SSL/TLS checkox and connect to your AWS ElastiCache with In-Transit Encryption.
+
+##### SSH tunnel
+Click on "Enable TLS-over-SSH" checkbox in the the SSH connection settings and connect to your AWS ElastiCache with In-Transit Encryption.
 
 ### Windows Azure Redis Cache <br /> <img src="https://docs.microsoft.com/en-us/azure/azure-cache-for-redis/media/index/redis-cache.svg" width="100" />
 
@@ -60,20 +75,6 @@ If you need advanced SSH tunneling you should setup a SSH tunnel manually and co
 ```
 ssh SSH_HOST -L 7000:localhost:6379
 ```
-
-### How to connect to Redis ElastiCache through EC2 
-Follow instructions from [this blog post](https://userify.com/blog/howto-connect-redis-ec2-ssh-tunnel-elasticache/)
-
-### How to connect to Redis ElastiCache with In-Transit Encryption through EC2
-#### Using RDM >=0.9.9
-
-Click on "Enable TLS-over-SSH" in the the SSH connection settings and follow instructions from section [How to connect to Redis ElastiCache through EC2](#how-to-connect-to-redis-elasticache-through-ec2)
-
-
-#### Using RDM <0.9.9
-Follow instructions from [this documentation section to setup `stunnel` on an EC2 instance](https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/in-transit-encryption.html#connect-tls)
-
-After that [connect to your Redis ElastiCache through EC2](#how-to-connect-to-redis-elasticache-through-ec2).
 
 ## Connect to a UNIX socket
 

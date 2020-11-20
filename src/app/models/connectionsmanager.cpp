@@ -124,6 +124,7 @@ bool ConnectionsManager::loadConnectionsConfigFromFile(const QString& config,
 
         if (conf.isNull()) continue;
 
+        conf.setId(QUuid::createUuid().toByteArray());
         addNewConnection(conf, false, group);
       }
 
@@ -271,6 +272,11 @@ void ConnectionsManager::createServerItemForConnection(
         onItemChanged(
             serverItem.dynamicCast<ConnectionsTree::TreeItem>().toWeakRef());
       });
+
+  connect(treeModel.data(), &TreeOperations::filterHistoryUpdated,
+          this, [this]() {
+      saveConfig();
+  });
 
   connect(serverItem.data(), &ConnectionsTree::ServerItem::editActionRequested,
           this, [this, treeModel]() {
